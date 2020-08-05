@@ -25,11 +25,10 @@ class App extends React.Component {
           this.setState({ error: resp.data.Error });
           this.setState({ listOfMovies: [] });
         }
-        // console.log(this.state.listOfMovies);
+        console.log(this.state.listOfMovies);
         // console.log(resp.data.Error);
         console.log(this.state.error);
       });
-
     // console.log(get_genres(find_by_id("tt0031381")));
   };
 
@@ -53,7 +52,7 @@ class App extends React.Component {
     } else if (this.state.error === "Movie not found!") {
       return (
         <tr>
-          <td>MOVIE NOT FOUND</td>
+          <td>MOVIE NOT FOUND, try again with different title of year</td>
         </tr>
       );
     }
@@ -64,12 +63,66 @@ class App extends React.Component {
       let header = Object.keys(this.state.listOfMovies[0]);
       return header.map((key, index) => {
         if (key !== "Poster") {
-          return <th key={index}>{key.toUpperCase()}</th>;
+          return (
+            <th key={index}>
+              {key.toUpperCase()}
+              <button>
+                <img
+                  style={{ width: 20, height: 20 }}
+                  src="/pictures/reorder.png"
+                  alt="reorder picture"
+                  onClick={() => this.ascendingValues(key)}
+                ></img>
+              </button>
+
+              <button>
+                <img
+                  style={{ width: 20, height: 20 }}
+                  src="/pictures/sort.png"
+                  alt="sort picture"
+                  onClick={() => this.descendingValues(key)}
+                ></img>
+              </button>
+            </th>
+          );
         }
       });
     } else {
       return;
     }
+  };
+
+  descendingValues = (keyValue) => {
+    let descendList = [];
+    descendList = [...this.state.listOfMovies];
+    descendList.sort(this.compareValues(keyValue, "desc"));
+    this.setState({ listOfMovies: descendList });
+  };
+
+  ascendingValues = (keyValue) => {
+    let ascendList = [];
+    ascendList = [...this.state.listOfMovies];
+    ascendList.sort(this.compareValues(keyValue));
+    this.setState({ listOfMovies: ascendList });
+  };
+
+  compareValues = (key, order = "asc") => {
+    return (a, b) => {
+      if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+        // property doesn't exist on either object
+        return 0;
+      }
+      const varA = typeof a[key] === "string" ? a[key].toUpperCase() : a[key];
+      const varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+
+      let comparison = 0;
+      if (varA > varB) {
+        comparison = 1;
+      } else if (varA < varB) {
+        comparison = -1;
+      }
+      return order === "desc" ? comparison * -1 : comparison;
+    };
   };
 
   render() {
