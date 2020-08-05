@@ -66,18 +66,22 @@ class App extends React.Component {
           return (
             <th key={index}>
               {key.toUpperCase()}
-              <button>
+              <br />
+              <button
+                className="ui mini blue basic button"
+                style={{ marginLeft: "2%", marginRight: "2%" }}
+              >
                 <img
-                  style={{ width: 20, height: 20 }}
+                  style={{ width: 25, height: 25 }}
                   src="/pictures/reorder.png"
                   alt="reorder picture"
                   onClick={() => this.ascendingValues(key)}
                 ></img>
               </button>
 
-              <button>
+              <button className="ui mini blue basic button">
                 <img
-                  style={{ width: 20, height: 20 }}
+                  style={{ width: 25, height: 25 }}
                   src="/pictures/sort.png"
                   alt="sort picture"
                   onClick={() => this.descendingValues(key)}
@@ -129,7 +133,7 @@ class App extends React.Component {
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
         <SearchBar onSubmit={this.onSearchSubmit} />
-        <table>
+        <table className="ui celled small very compact table unstackable">
           <tbody>
             <tr>{this.renderTableHeader()}</tr>
             {this.renderTableData()}

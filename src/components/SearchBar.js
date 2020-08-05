@@ -32,7 +32,9 @@ class SearchBar extends React.Component {
               onChange={(e) => this.setState({ year: e.target.value })}
             />
           </div>
-          <input type="submit" value="submit" />
+          <button type="submit" className="ui primary button">
+            submit
+          </button>
         </form>
       </div>
     );
