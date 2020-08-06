@@ -61,8 +61,10 @@ class App extends React.Component {
   renderTableHeader = () => {
     if (this.state.listOfMovies.length) {
       let header = Object.keys(this.state.listOfMovies[0]);
-      return header.map((key, index) => {
-        if (key !== "Poster") {
+      return header
+        .filter((key) => key !== "Poster")
+        .map((key, index) => {
+          // if (key !== "Poster") {
           return (
             <th key={index}>
               {key.toUpperCase()}
@@ -72,9 +74,9 @@ class App extends React.Component {
                 style={{ marginLeft: "2%", marginRight: "2%" }}
               >
                 <img
+                  alt="accending"
                   style={{ width: 25, height: 25 }}
                   src="/pictures/reorder.png"
-                  alt="reorder picture"
                   onClick={() => this.ascendingValues(key)}
                 ></img>
               </button>
@@ -83,14 +85,14 @@ class App extends React.Component {
                 <img
                   style={{ width: 25, height: 25 }}
                   src="/pictures/sort.png"
-                  alt="sort picture"
+                  alt="descending"
                   onClick={() => this.descendingValues(key)}
                 ></img>
               </button>
             </th>
           );
-        }
-      });
+          // }
+        });
     } else {
       return;
     }
